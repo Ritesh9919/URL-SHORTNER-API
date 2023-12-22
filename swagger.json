@@ -1,0 +1,179 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "description": "API for URL SHORTENER",
+    "title": "URL SHORTENER API"
+  },
+  "host": "localhost:8000",
+  "securityDefinitions": {
+    "jwt": {
+      "in": "header",
+      "name": "Authorization",
+      "type": "apiKey"
+    }
+  },
+
+  "paths": {
+    "/api/users/register": {
+      "post": {
+        "tags": ["Register"],
+        "summery": "Register user",
+        "description": "Register user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "User login suceesfully"
+          },
+          "400": {
+            "description": "All fields are required"
+          },
+          "409": {
+            "description": "User already exist"
+          },
+          "500": {
+            "description": "Internal server error!"
+          }
+        }
+      }
+    },
+    "/api/users/login": {
+      "post": {
+        "tags": ["Login"],
+        "summery": "Login user",
+        "description": "Login user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User login successfully"
+          },
+          "400": {
+            "description": "username or email is required"
+          },
+          "404": {
+            "description": "User does not exist"
+          },
+          "500": {
+            "description": "Internal server error!"
+          }
+        }
+      }
+    },
+    "/api/url/shorten": {
+      "post": {
+        "tags": ["Shorten Url"],
+        "summery": "Shorten Url",
+        "description": "Shorten Url",
+        "security": [{ "jwt": {} }],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Register user",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "originalUrl": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "CREATED"
+          },
+          "401":{
+            "description":"Unauthorized request"
+          },
+
+          "400": {
+            "description": "Original url is required"
+          },
+          "500": {
+            "description": "Internal server error!"
+          }
+        }
+      }
+    },
+    "/api/url/{shortUrl}": {
+      "get": {
+        "tags": ["Access Original Url"],
+        "summery": "Access Original Url",
+        "description": "Access Original Url",
+        "security": [{ "jwt": {} }],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "shortUrl",
+            "description": "ShortUrl",
+            "type": "string",
+            "decription": "shortUrl"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "shortUrl is required"
+          },
+          "401":{
+            "description":"Unauthorized request"
+          },
+
+          "404": {
+            "description": "Url not found"
+          },
+          "500": {
+            "description": "Something went wrong!"
+          }
+        }
+      }
+    }
+  }
+}
