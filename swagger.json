@@ -5,7 +5,7 @@
     "description": "API for URL SHORTENER",
     "title": "URL SHORTENER API"
   },
-  "host": "localhost:8000",
+  "host": "url-shortener-kn2z.onrender.com/",
   "securityDefinitions": {
     "jwt": {
       "in": "header",
