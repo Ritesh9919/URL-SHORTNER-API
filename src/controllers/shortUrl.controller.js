@@ -57,7 +57,8 @@ const getOriginalUrl = asyncHandler(async (req, res) => {
     throw new ApiError(404, "Url not found");
   }
 
-  res.redirect(url.originalUrl);
+  return res.status(200)
+  .json(new ApiResponse(200, url.originalUrl));
 });
 
 export { shortUrl, getOriginalUrl };
